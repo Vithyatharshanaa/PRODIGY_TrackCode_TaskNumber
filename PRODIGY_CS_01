@@ -1,0 +1,45 @@
+def caesar_cipher(text, shift, encrypt=True):
+  """
+  Encrypts or decrypts text using the Caesar Cipher algorithm.
+
+  Args:
+    text: The text to encrypt or decrypt.
+    shift: The number of positions to shift the letters.
+    encrypt: True to encrypt, False to decrypt (default: True).
+
+  Returns:
+    The encrypted or decrypted text.
+  """
+
+  alphabet = "abcdefghijklmnopqrstuvwxyz"
+  uppercase_alphabet = alphabet.upper()
+  shifted_alphabet = alphabet[shift:] + alphabet[:shift]
+  shifted_uppercase_alphabet = uppercase_alphabet[shift:] + uppercase_alphabet[:shift]
+
+  result = ""
+  for char in text:
+    if char.isalpha():
+      if char.islower():
+        new_char = shifted_alphabet[alphabet.index(char)]
+      else:
+        new_char = shifted_uppercase_alphabet[uppercase_alphabet.index(char)]
+    else:
+      new_char = char
+
+    if encrypt:
+      result += new_char
+    else:
+      result += shifted_alphabet[::-1][shifted_uppercase_alphabet[::-1].index(new_char)]
+
+  return result
+
+# Example usage
+text = "Hello, world!"
+shift = 3
+
+encrypted_text = caesar_cipher(text, shift)
+decrypted_text = caesar_cipher(encrypted_text, shift, encrypt=False)
+
+print("Original text:", text)
+print("Encrypted text:", encrypted_text)
+print("Decrypted text:", decrypted_text)
